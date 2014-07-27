@@ -3,11 +3,11 @@ import os, glob
 filelist = ""
 filecount = 0
 
-for dirname, dirnames, filenames in os.walk("./input"):
+for dirname, dirnames, filenames in os.walk(os.path.join(".", "input")):
     for filename in filenames:
         if filename != "Thumbs.db" and filename != "README":
             filecount = filecount + 1
-            filelist += os.path.join(dirname, filename) + " "
+            filelist += '"' + os.path.join(dirname, filename) + '" '
 
 print("Will convert {filecount} files.".format_map(locals()))
 
@@ -30,7 +30,8 @@ else:
   print("Wrong upsampling selected. Enter 0, 2 or 4.")
   exit(1)
 
-cmd = "./jbig2 -t {threshold} -T {bwThreshold} {upsample} -s -p {filelist}".format_map(locals())
+jbig2 = os.path.join(".", "jbig2")
+cmd = "{jbig2} -t {threshold} -T {bwThreshold} {upsample} -s -p {filelist}".format_map(locals())
 print("Converting to JBIG2 with: {cmd}".format_map(locals()))
 os.system(cmd)
 
