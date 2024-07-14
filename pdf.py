@@ -103,7 +103,7 @@ class Doc:
 def ref(x):
   return '%d 0 R' % x
 
-def main(symboltable='symboltable', pagefiles=glob.glob('page-*')):
+def main(symboltable='symboltable', pagefiles=sorted(glob.glob('page-*'))):
   doc = Doc()
   doc.add_object(Obj({'Type' : '/Catalog', 'Outlines' : ref(2), 'Pages' : ref(3)}))
   doc.add_object(Obj({'Type' : '/Outlines', 'Count': '0'}))
@@ -157,10 +157,10 @@ if __name__ == '__main__':
 
   if len(sys.argv) == 2:
     sym = sys.argv[1] + '.sym'
-    pages = glob.glob(sys.argv[1] + '.[0-9]*')
+    pages = sorted(glob.glob(sys.argv[1] + '.[0-9]*'))
   elif len(sys.argv) == 1:
     sym = 'symboltable'
-    pages = glob.glob('page-*')
+    pages = sorted(glob.glob('page-*'))
   else:
     usage(sys.argv[0])
 
